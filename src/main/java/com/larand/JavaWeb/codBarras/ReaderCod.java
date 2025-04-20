@@ -6,14 +6,23 @@ import com.google.zxing.common.HybridBinarizer;
 
 import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
-import java.io.File;
+import java.io.ByteArrayInputStream;
+import java.util.Base64;
 
 public class ReaderCod {
-    public static String read() {
+    public static String read(String base64Image) {
         try {
             System.out.println("Entrou no ReaderCod");
-            File file = new File("./src/main/java/com/larand/JavaWeb/codBarras/CodBarras.jpg");
-            BufferedImage image = ImageIO.read(file);
+
+            // Remove o prefixo se tiver (ex: "data:image/png;base64,")
+            if (base64Image.contains(",")) {
+                base64Image = base64Image.split(",")[1];
+            }
+
+            // Decodifica a imagem
+            byte[] imageBytes = Base64.getDecoder().decode(base64Image);
+            ByteArrayInputStream bis = new ByteArrayInputStream(imageBytes);
+            BufferedImage image = ImageIO.read(bis);
 
             // Converte para formato lido pelo ZXing
             LuminanceSource source = new BufferedImageLuminanceSource(image);

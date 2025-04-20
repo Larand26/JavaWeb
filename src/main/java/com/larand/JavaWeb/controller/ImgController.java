@@ -4,10 +4,6 @@ import com.larand.JavaWeb.codBarras.ReaderCod;
 import com.larand.JavaWeb.model.ImageD;
 import org.springframework.web.bind.annotation.*;
 
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
-import java.util.Base64;
 import java.util.HashMap;
 
 @RestController
@@ -28,12 +24,7 @@ public class ImgController {
             // Remover o prefixo 'data:image/jpeg;base64,' se existir
             String base64Image = imageD.getImg().split(",")[1]; 
 
-            byte[] imageBytes = Base64.getDecoder().decode(base64Image);
-
-            // Caminho para salvar a imagem
-            Path path = Paths.get("./src/main/java/com/larand/JavaWeb/codBarras/CodBarras.jpg");
-            Files.write(path, imageBytes);
-            String cod = ReaderCod.read();
+            String cod = ReaderCod.read(base64Image);
 
             HashMap<String, String> response = new HashMap<>();
             response.put("status", "success");
