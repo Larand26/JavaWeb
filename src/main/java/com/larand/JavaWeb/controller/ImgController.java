@@ -1,6 +1,7 @@
 package com.larand.JavaWeb.controller;
 
 import com.larand.JavaWeb.codBarras.ReaderCod;
+import com.larand.JavaWeb.VerifyBoleto;
 import com.larand.JavaWeb.model.ImageD;
 import org.springframework.web.bind.annotation.*;
 
@@ -25,6 +26,8 @@ public class ImgController {
             String base64Image = imageD.getImg().split(",")[1]; 
 
             String cod = ReaderCod.read(base64Image);
+
+            HashMap<String, String> result = VerifyBoleto.verify(cod);
 
             HashMap<String, String> response = new HashMap<>();
             response.put("status", "success");
