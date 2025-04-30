@@ -12,17 +12,21 @@ public class VerifyBoleto {
         HashMap<String, String> result = new HashMap<>();
         JSONObject bancos = new JSONObject();
         try {
-            System.out.println(cod);
             new FileReader("src/main/java/com/larand/JavaWeb/json/bancos.json").close();
             bancos = JsonReader.readJsonFile("src/main/java/com/larand/JavaWeb/json/bancos.json");
 
-
             String codBanco = cod.substring(0, 3);
-            System.out.println(cod.length());
+            String codMoeda = cod.substring(3, 4);
 
-            System.out.println(codBanco);
-            System.out.println(bancos.get(codBanco));
+            JSONObject banco = (JSONObject) bancos.get(codBanco);
+            String nomeBanco = (String) banco.get("nome");
+            String logoBanco = (String) banco.get("logo");
+            String moeda = codMoeda.equals("9") ? "Real" : "Outro";
 
+            result.put("nomeBanco", nomeBanco);
+            result.put("logoBanco", logoBanco);
+            result.put("moeda", moeda);
+            result.put("status", "success");
             
             return result;
             

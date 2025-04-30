@@ -29,12 +29,7 @@ public class ImgController {
 
             HashMap<String, String> result = VerifyBoleto.verify(cod);
 
-            HashMap<String, String> response = new HashMap<>();
-            response.put("status", "success");
-            response.put("message", "Image uploaded successfully");
-            response.put("cod", cod);
-
-            return response;
+            return result;
         } catch (IllegalArgumentException e) {
             HashMap<String, String> errorResponse = new HashMap<>();
             errorResponse.put("status", "error");
